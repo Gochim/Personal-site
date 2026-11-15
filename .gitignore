@@ -1,0 +1,16 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor and tool settings
+.vscode/
+.claude/
+
+# Dependencies and build output
+node_modules/
+dist/
+
+# Local environment files
+.env
+.env.*

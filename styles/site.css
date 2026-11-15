@@ -1,0 +1,290 @@
+/*
+  site.css — the only stylesheet for the site.
+
+  Every colour, size, weight and spacing value is defined once in :root below
+  and used by name everywhere else. The design guide, kept outside this
+  repository, explains each value. Change the guide first, then this file.
+
+  No raw colours or font sizes below the "Base" line.
+
+  This theme is uncopyrighted.
+  Do whatever you'd like with it.
+*/
+
+:root {
+  color-scheme: light dark;
+
+  /* Colour */
+  --bg: #ffffff;
+  --text: #333333;
+  --muted: #666666;
+  --underline: #8c8c8c;
+  --rule: #f5f5f5;
+
+  /* Type */
+  --font: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --weight-body: 300;
+  --weight-strong: 400;
+  --size-root: 112.5%; /* 18px at the browser default */
+  --size-title: 2rem; /* 36px */
+  --size-heading: 1.5rem; /* 27px */
+  --size-nav: 0.944rem; /* 17px */
+  --size-small: 0.889rem; /* 16px */
+  --size-meta: 0.778rem; /* 14px */
+  --leading-body: 1.5;
+  --leading-title: 1.25;
+  --leading-heading: 1.35;
+  --tracking-nav: 0.03em;
+  --tracking-meta: 0.2em;
+
+  /* Layout */
+  --column: 33.333rem; /* 600px */
+  --wide: 70rem;
+  --gutter: 1.111rem; /* 20px */
+  --header-pad: 2rem;
+  --nav-gap: 1.111rem; /* 20px */
+
+  /* Spacing */
+  --space-para: 1em;
+  --space-title: 2.5em 0 1.25em;
+  --space-heading: 1.5em 0 1em;
+  --space-list: 0.5em 0 1.7em;
+  --space-item: 1em;
+  --space-item-compact: 0.2em;
+  --space-meta-after: 3.5em;
+  --space-end: 5.556rem; /* 100px */
+  --space-footer: 2.5em;
+
+  /* Lines */
+  --underline-width: 2px;
+  --rule-width: 1px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161616;
+    --text: #d6d6d6;
+    --muted: #999999;
+    --underline: #6e6e6e;
+    --rule: #262626;
+  }
+}
+
+/* Narrow screens: smaller header and title margins. */
+@media (max-width: 48em) {
+  :root {
+    --header-pad: 1rem;
+    --space-title: 2em 0 1em;
+  }
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--size-root);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Layout ---------- */
+
+.column {
+  max-width: calc(var(--column) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.wide {
+  max-width: var(--wide);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+main {
+  margin-bottom: var(--space-end);
+}
+
+/* ---------- Text ---------- */
+
+h1,
+h2 {
+  font-weight: var(--weight-body);
+  text-align: center;
+}
+
+h1 {
+  font-size: var(--size-title);
+  line-height: var(--leading-title);
+  margin: var(--space-title);
+}
+
+h2 {
+  font-size: var(--size-heading);
+  line-height: var(--leading-heading);
+  margin: var(--space-heading);
+}
+
+p {
+  margin: 0 0 var(--space-para);
+}
+
+strong {
+  font-weight: var(--weight-strong);
+}
+
+/* Small uppercase line: dates, "last updated". */
+.meta {
+  font-size: var(--size-meta);
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Directly under the title it takes the reference's byline position. */
+h1 + .meta {
+  text-align: center;
+  margin-bottom: var(--space-meta-after);
+}
+
+/* ---------- Links ---------- */
+
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: var(--underline-width) solid var(--underline);
+}
+
+a:hover {
+  border-bottom-color: var(--text);
+}
+
+a:focus-visible {
+  outline: var(--underline-width) solid var(--text);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a {
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* ---------- Lists ---------- */
+
+ol,
+ul {
+  margin: var(--space-list);
+  padding-left: 1.2em;
+}
+
+li {
+  margin-bottom: var(--space-item);
+  padding-left: 0.25em;
+}
+
+/* One-line entries: article list, roles, degrees. */
+.compact li {
+  margin-bottom: var(--space-item-compact);
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  border-bottom: var(--rule-width) solid var(--rule);
+}
+
+.site-header .wide {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem var(--nav-gap);
+  padding-block: var(--header-pad);
+}
+
+.site-header a {
+  border-bottom: 0;
+  font-size: var(--size-nav);
+  letter-spacing: var(--tracking-nav);
+  padding-block: 0.25rem;
+}
+
+.site-name {
+  font-weight: var(--weight-strong);
+  white-space: nowrap;
+}
+
+.site-header nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--nav-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header nav li {
+  margin: 0;
+  padding: 0;
+}
+
+.site-header nav a {
+  color: var(--muted);
+}
+
+.site-header nav a:hover,
+.site-header nav a[aria-current="page"] {
+  color: var(--text);
+}
+
+/* Narrow screens: name on its own row, links below, both centred. No menu button. */
+@media (max-width: 48em) {
+  .site-header .wide {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .site-header nav ul {
+    justify-content: center;
+  }
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: var(--rule-width) solid var(--rule);
+  padding-block: var(--space-footer);
+  text-align: center;
+  font-size: var(--size-small);
+  color: var(--muted);
+}
+
+.site-footer p {
+  margin-bottom: 0.5em;
+}
+
+/* ---------- Image ---------- */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
