@@ -1,0 +1,118 @@
+---
+// The shared shell of every page: metadata, header and footer, written once.
+import '../../styles/site.css';
+import { getImage } from 'astro:assets';
+import photo from '../../assets/dmytro-ivanchenko.png';
+import { pages } from '../data/pages';
+import { profile } from '../data/profile';
+import { absolute, markdownPath, pagePath, type Page } from '../lib/render';
+import { schemaFor } from '../lib/schema';
+
+interface Props {
+  page: Page;
+}
+
+const { page } = Astro.props;
+const site = Astro.site!.href;
+const url = absolute(pagePath(page), site);
+const isHome = page.slug === '';
+
+const shareImage = await getImage({ src: photo, width: 600, format: 'jpeg' });
+const shareImageUrl = absolute(shareImage.src, site);
+
+// "<" is written as an escape so nothing in the data can close the script tag.
+const schema = JSON.stringify(schemaFor(page, site, shareImageUrl)).replace(/</g, '\\u003c');
+
+const updatedText = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(new Date(`${profile.updated}T00:00:00Z`));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{page.title}</title>
+    <meta name="description" content={page.description} />
+    <meta name="author" content={profile.name} />
+    <link rel="canonical" href={url} />
+    <link rel="alternate" type="text/markdown" href={absolute(markdownPath(page), site)} />
+    <link rel="icon" href="data:," />
+
+    <meta property="og:type" content={isHome ? 'profile' : 'website'} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={page.title} />
+    <meta property="og:description" content={page.description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:image" content={shareImageUrl} />
+    <meta property="og:image:width" content={String(shareImage.attributes.width)} />
+    <meta property="og:image:height" content={String(shareImage.attributes.height)} />
+    <meta property="og:image:alt" content={`Portrait of ${profile.name}`} />
+    {isHome && <meta property="profile:first_name" content={profile.givenName} />}
+    {isHome && <meta property="profile:last_name" content={profile.familyName} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={page.title} />
+    <meta name="twitter:description" content={page.description} />
+    <meta name="twitter:image" content={shareImageUrl} />
+
+    <script is:inline type="application/ld+json" set:html={schema} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wide">
+        <a class="site-name" href="/">{profile.name}</a>
+        <nav aria-label="Main">
+          <ul>
+            {
+              pages
+                .filter((item) => item.slug !== '')
+                .map((item) => (
+                  <li>
+                    <a href={pagePath(item)} aria-current={item.slug === page.slug ? 'page' : undefined}>
+                      {item.label}
+                    </a>
+                  </li>
+                ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="column">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="column">
+        <ul>
+          <li><a href={profile.linkedin} rel="me">LinkedIn</a></li>
+          <li><a href={`mailto:${profile.email}`}>Email</a></li>
+        </ul>
+      </div>
+      <div class="site-utility">
+        <div class="column">
+          <p>
+            {profile.name} is also written{' '}
+            {
+              profile.alternateNames.map((alt, index) => (
+                <Fragment>
+                  {index > 0 && (index === profile.alternateNames.length - 1 ? ' and ' : ', ')}
+                  <span lang={alt.lang}>{alt.text}</span>
+                </Fragment>
+              ))
+            }.
+          </p>
+          <p class="meta">
+            Last updated <time datetime={profile.updated}>{updatedText}</time>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

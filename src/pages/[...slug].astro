@@ -1,0 +1,82 @@
+---
+// All five pages are produced by this one file from the blocks in
+// src/data/pages.ts. Each block type is one of the parts the design allows.
+import { Image } from 'astro:assets';
+import photo from '../../assets/dmytro-ivanchenko.png';
+import { pages } from '../data/pages';
+import Base from '../layouts/Base.astro';
+import { dayAndMonth, years } from '../lib/articles';
+import { inlineHtml, type Page } from '../lib/render';
+import { ownProfiles } from '../lib/schema';
+
+export function getStaticPaths() {
+  return pages.map((page) => ({
+    params: { slug: page.slug === '' ? undefined : page.slug },
+    props: { page },
+  }));
+}
+
+interface Props {
+  page: Page;
+}
+
+const { page } = Astro.props;
+const profiles = ownProfiles();
+const html = (text: string) => inlineHtml(text, profiles);
+---
+
+<Base page={page}>
+  <h1>{page.heading}</h1>
+  {
+    page.blocks.map((block) => {
+      switch (block.type) {
+        case 'meta':
+          return <p class="meta" set:html={html(block.text)} />;
+        case 'p':
+          return <p set:html={html(block.text)} />;
+        case 'h2':
+          return <h2>{block.text}</h2>;
+        case 'list':
+          return (
+            <ul class={block.compact ? 'compact' : undefined}>
+              {block.items.map((item) => (
+                <li set:html={html(item)} />
+              ))}
+            </ul>
+          );
+        case 'photo':
+          return (
+            <Image
+              src={photo}
+              alt={block.alt}
+              width={240}
+              densities={[1, 2]}
+              format="webp"
+              quality={80}
+              loading="eager"
+              fetchpriority="high"
+            />
+          );
+        case 'articles':
+          return years.map((year) => (
+            <Fragment>
+              <h2>{year.year}</h2>
+              <ul class="dated">
+                {year.rows.map((version) => (
+                  <li>
+                    <time datetime={version.date}>{dayAndMonth(version.date)}</time>
+                    <span>
+                      <a href={version.url} lang={version.lang === 'en' ? undefined : version.lang}>
+                        {version.title}
+                      </a>{' '}
+                      ({version.language})
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Fragment>
+          ));
+      }
+    })
+  }
+</Base>

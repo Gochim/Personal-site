@@ -12,7 +12,7 @@
 */
 
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
   /* Colour */
   --bg: #ffffff;
@@ -30,8 +30,9 @@
   --size-title: 2rem; /* 36px */
   --size-heading: 1.5rem; /* 27px */
   --size-nav: 0.944rem; /* 17px */
-  --size-small: 0.889rem; /* 16px */
   --size-meta: 0.778rem; /* 14px */
+  --size-utility: 0.667rem; /* 12px */
+  --size-updated: 0.556rem; /* 10px */
   --leading-body: 1.5;
   --leading-title: 1.25;
   --leading-heading: 1.35;
@@ -44,6 +45,7 @@
   --gutter: 1.111rem; /* 20px */
   --header-pad: 2rem;
   --nav-gap: 1.111rem; /* 20px */
+  --footer-gap: 2.222rem; /* 40px */
 
   /* Spacing */
   --space-para: 1em;
@@ -55,20 +57,15 @@
   --space-meta-after: 3.5em;
   --space-end: 5.556rem; /* 100px */
   --space-footer: 2.5em;
+  --space-row: 0.556rem; /* 10px */
+  --date-gap: 1.111rem; /* 20px */
+  --date-width: 3.5em;
+  --photo: 13.333rem; /* 240px */
+  --space-photo: 2em;
 
   /* Lines */
   --underline-width: 2px;
   --rule-width: 1px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #161616;
-    --text: #d6d6d6;
-    --muted: #999999;
-    --underline: #6e6e6e;
-    --rule: #262626;
-  }
 }
 
 /* Narrow screens: smaller header and title margins. */
@@ -201,9 +198,33 @@ li {
   padding-left: 0.25em;
 }
 
-/* One-line entries: article list, roles, degrees. */
+/* One-line entries: degrees, courses, languages, contact details. */
 .compact li {
   margin-bottom: var(--space-item-compact);
+}
+
+/* Dated list: the rows of one year in the article list. Day and month on
+   the left, the title on the right, a hairline under each row. */
+.dated {
+  list-style: none;
+  padding-left: 0;
+}
+
+.dated li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--date-gap);
+  margin: 0;
+  padding: var(--space-row) 0;
+  border-bottom: var(--rule-width) solid var(--rule);
+}
+
+.dated time {
+  flex: none;
+  width: var(--date-width);
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 /* ---------- Header ---------- */
@@ -272,19 +293,63 @@ li {
 
 .site-footer {
   border-top: var(--rule-width) solid var(--rule);
-  padding-block: var(--space-footer);
   text-align: center;
-  font-size: var(--size-small);
+  font-size: var(--size-utility); /* the utility lines; the links set their own size */
   color: var(--muted);
+}
+
+/* The contact links, then the utility lines (other spellings of the name,
+   "last updated"), set apart by space alone. */
+.site-footer > .column {
+  padding-top: var(--space-footer);
+}
+
+.site-utility {
+  padding-block: var(--space-footer);
 }
 
 .site-footer p {
   margin-bottom: 0.5em;
 }
 
+.site-footer .meta {
+  font-size: var(--size-updated);
+}
+
+/* Contact links: one centred row, styled as the header links. */
+.site-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 var(--footer-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer li {
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer a {
+  border-bottom: 0;
+  color: var(--muted);
+  font-size: var(--size-nav);
+  letter-spacing: var(--tracking-nav);
+}
+
+.site-footer a:hover {
+  color: var(--text);
+}
+
 /* ---------- Image ---------- */
 
+/* The photo on Home is the only image on the site. */
 img {
+  display: block;
+  width: var(--photo);
   max-width: 100%;
   height: auto;
+  margin: var(--space-photo) auto;
 }
