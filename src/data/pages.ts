@@ -23,6 +23,7 @@ const home: Page = {
   heading: p.name,
   title: `${p.name}, ${identity}`,
   description: `${p.name} is a ${p.title} and ${p.secondTitle} based in ${place}, with ${p.years} years in software, P&L ownership and client partnership.`,
+  justified: true,
   blocks: [
     { type: 'meta', text: identity },
     { type: 'p', text: p.statement },
@@ -140,7 +141,7 @@ const contact: Page = {
       items: [
         `**Email.** [${p.email}](mailto:${p.email})`,
         `**LinkedIn.** [${linkedinLabel}](${p.linkedin})`,
-        `**Region.** ${place}`,
+        `**Location.** ${place}`,
       ],
     },
   ],

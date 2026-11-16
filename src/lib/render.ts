@@ -26,6 +26,8 @@ export interface Page {
   title: string;
   /** One-sentence meta description. */
   description: string;
+  /** Paragraphs and list items set flush on both sides. */
+  justified?: boolean;
   blocks: Block[];
 }
 

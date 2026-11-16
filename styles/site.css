@@ -162,6 +162,16 @@ h1 + .meta {
   margin-bottom: var(--space-meta-after);
 }
 
+/* Justified text: paragraphs and list items flush on both sides, with
+   hyphenation to keep the gaps between words even. Meta lines keep their
+   own alignment. */
+.justified p:not(.meta),
+.justified li {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
 /* ---------- Links ---------- */
 
 a {

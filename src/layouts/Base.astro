@@ -84,7 +84,7 @@ const updatedText = new Intl.DateTimeFormat('en-GB', {
       </div>
     </header>
 
-    <main class="column">
+    <main class={page.justified ? 'column justified' : 'column'}>
       <slot />
     </main>
 
