@@ -1,11 +1,11 @@
 // The Markdown copy of each page: /index.md, /about.md and so on.
 import type { APIRoute } from 'astro';
-import { pages } from '../data/pages';
+import { allPages } from '../data/pages';
 import type { Page } from '../lib/render';
 import { pageCopy } from '../lib/text';
 
 export function getStaticPaths() {
-  return pages.map((page) => ({
+  return allPages.map((page) => ({
     params: { page: page.slug === '' ? 'index' : page.slug },
     props: { page },
   }));

@@ -1,6 +1,6 @@
 // Structured data (schema.org, JSON-LD) for each page. Home describes the
 // person in full; every other page names its own type and points to the same
-// person, so all five pages are tied to one identity.
+// person, so all pages are tied to one identity.
 
 import { profile as p } from '../data/profile';
 import { sites, versions } from './articles';

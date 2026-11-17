@@ -3,7 +3,7 @@
 import '../../styles/site.css';
 import { getImage } from 'astro:assets';
 import photo from '../../assets/dmytro-ivanchenko.png';
-import { pages } from '../data/pages';
+import { pages, privacy } from '../data/pages';
 import { profile } from '../data/profile';
 import { absolute, markdownPath, pagePath, type Page } from '../lib/render';
 import { schemaFor } from '../lib/schema';
@@ -110,6 +110,11 @@ const updatedText = new Intl.DateTimeFormat('en-GB', {
           </p>
           <p class="meta">
             Last updated <time datetime={profile.updated}>{updatedText}</time>
+          </p>
+          <p>
+            <a href={pagePath(privacy)} aria-current={page.slug === privacy.slug ? 'page' : undefined}>
+              {privacy.label}
+            </a>
           </p>
         </div>
       </div>

@@ -1,10 +1,10 @@
 import type { APIRoute } from 'astro';
-import { pages } from '../data/pages';
+import { allPages } from '../data/pages';
 import { profile } from '../data/profile';
 import { absolute, escapeHtml, pagePath } from '../lib/render';
 
 export const GET: APIRoute = ({ site }) => {
-  const urls = pages
+  const urls = allPages
     .map(
       (page) =>
         `  <url>\n    <loc>${escapeHtml(absolute(pagePath(page), site!.href))}</loc>\n    <lastmod>${profile.updated}</lastmod>\n  </url>`,

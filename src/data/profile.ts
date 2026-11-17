@@ -28,12 +28,12 @@ export const profile = {
 
   // Date of the last content change, year-month-day. Shown in the footer of
   // every page and carried in the structured data.
-  updated: '2026-11-15',
+  updated: '2026-11-17',
 
   statement:
     'I lead a technology services business unit and help multinational organisations turn technology investment into measurable growth, with a focus on AI adoption that lasts.',
 
-  topics: 'AI adoption, delivery and leadership',
+  topics: 'people, leadership and AI adoption',
 
   expertise: [
     {
@@ -77,7 +77,7 @@ export const profile = {
       years: '2020 – 2022',
       title: 'Delivery Partner',
       organisation: 'a professional IT services company',
-      line: 'Delivery for a portfolio of 15 clients and 80+ people across data management, healthcare, agriculture and ed-tech. I moved from Lead Software Engineer to Delivery Partner in under 12 months.',
+      line: 'Delivery for a portfolio of more than 10 clients and 80+ people across data management, healthcare, agriculture and ed-tech. I moved from Lead Software Engineer to Delivery Partner in under 12 months.',
     },
     {
       years: '2017 – 2020',

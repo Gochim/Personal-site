@@ -353,6 +353,11 @@ li {
   color: var(--text);
 }
 
+/* The legal link sits among the utility lines and takes their size. */
+.site-utility a {
+  font-size: var(--size-utility);
+}
+
 /* ---------- Image ---------- */
 
 /* The photo on Home is the only image on the site. */

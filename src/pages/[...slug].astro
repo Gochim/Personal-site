@@ -1,16 +1,16 @@
 ---
-// All five pages are produced by this one file from the blocks in
+// Every page is produced by this one file from the blocks in
 // src/data/pages.ts. Each block type is one of the parts the design allows.
 import { Image } from 'astro:assets';
 import photo from '../../assets/dmytro-ivanchenko.png';
-import { pages } from '../data/pages';
+import { allPages } from '../data/pages';
 import Base from '../layouts/Base.astro';
 import { dayAndMonth, years } from '../lib/articles';
 import { inlineHtml, type Page } from '../lib/render';
 import { ownProfiles } from '../lib/schema';
 
 export function getStaticPaths() {
-  return pages.map((page) => ({
+  return allPages.map((page) => ({
     params: { slug: page.slug === '' ? undefined : page.slug },
     props: { page },
   }));

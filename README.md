@@ -20,7 +20,7 @@ npm run preview  # serve dist/ locally
 | Path | Holds |
 |---|---|
 | `src/data/profile.ts` | The facts shown on the site, stored once |
-| `src/data/pages.ts` | The text of the five pages |
+| `src/data/pages.ts` | The text of the five pages and the privacy policy |
 | `assets/articles.md` | The writing sites and the article list; the Writing page is built from it |
 | `assets/dmytro-ivanchenko.png` | The photo, as received; the build makes the compressed copies |
 | `styles/site.css` | The only stylesheet |
