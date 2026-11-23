@@ -1,0 +1,22 @@
+# Opens a pull request each month when a newer version of a package or a
+# GitHub action is out. Security updates are opened as soon as they appear.
+# A merge to main publishes the site, so build and check each one first.
+
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      npm:
+        patterns: ['*']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7

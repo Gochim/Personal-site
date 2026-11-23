@@ -2,8 +2,7 @@
   site.css — the only stylesheet for the site.
 
   Every colour, size, weight and spacing value is defined once in :root below
-  and used by name everywhere else. The design guide, kept outside this
-  repository, explains each value. Change the guide first, then this file.
+  and used by name everywhere else.
 
   No raw colours or font sizes below the "Base" line.
 
@@ -156,7 +155,7 @@ strong {
   color: var(--muted);
 }
 
-/* Directly under the title it takes the reference's byline position. */
+/* Directly under the title it sits in the byline position. */
 h1 + .meta {
   text-align: center;
   margin-bottom: var(--space-meta-after);

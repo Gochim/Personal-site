@@ -34,6 +34,15 @@ export interface Page {
 const LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g;
 const BOLD = /\*\*(.+?)\*\*/g;
 
+/** A link in block text goes to an https:// address, a mailto: address or a
+    page of this site. Any other address stops the build. */
+const SAFE_URL = /^(https:\/\/|mailto:|\/(?![/\\]))/;
+
+function checkLink(url: string): string {
+  if (!SAFE_URL.test(url)) throw new Error(`A link address in the page text is not allowed: ${url}`);
+  return url;
+}
+
 export function escapeHtml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
@@ -47,7 +56,7 @@ export function inlineHtml(text: string, ownProfiles: string[] = []): string {
   return escapeHtml(text)
     .replace(LINK, (_all, label: string, url: string) => {
       const rel = ownProfiles.includes(url) ? ' rel="me"' : '';
-      return `<a href="${url}"${rel}>${label}</a>`;
+      return `<a href="${checkLink(url)}"${rel}>${label}</a>`;
     })
     .replace(BOLD, '<strong>$1</strong>');
 }
@@ -55,6 +64,7 @@ export function inlineHtml(text: string, ownProfiles: string[] = []): string {
 /** Block text to Markdown: links inside the site get their full address. */
 export function inlineMarkdown(text: string, site: string): string {
   return text.replace(LINK, (_all, label: string, url: string) => {
+    checkLink(url);
     return `[${label}](${url.startsWith('/') ? absolute(url, site) : url})`;
   });
 }

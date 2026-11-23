@@ -40,6 +40,23 @@ const LANGUAGE_CODES: Record<string, string> = {
 const LINK = /^\[(.+)\]\((\S+)\)$/;
 const ENTRY = /^\[(.+)\]\((\S+)\)\s+\(([^,()]+),\s*(\d{4}-\d{2}-\d{2})\)$/;
 
+/** Every address must be a full https:// address. */
+function checkUrl(url: string, fail: (why: string) => never): void {
+  let protocol = '';
+  try {
+    protocol = new URL(url).protocol;
+  } catch {
+    fail(`"${url}" is not a full address`);
+  }
+  if (protocol !== 'https:' || !url.startsWith('https://')) fail(`"${url}" must start with https://`);
+  if (/[[\]<>"*]/.test(url)) fail(`"${url}" contains a character an address cannot have`);
+}
+
+/** A name or title cannot hold square brackets, which mark a link. */
+function checkText(text: string, fail: (why: string) => never): void {
+  if (/[[\]]/.test(text)) fail(`"${text}" contains a square bracket`);
+}
+
 function parse(text: string): { sites: Site[]; articles: Article[] } {
   const sites: Site[] = [];
   const articles: Article[] = [];
@@ -66,6 +83,8 @@ function parse(text: string): { sites: Site[]; articles: Article[] } {
     if (section === 'writing sites') {
       const link = body.trim().match(LINK);
       if (!link) fail('expected "- [Site name](address)"');
+      checkText(link![1], fail);
+      checkUrl(link![2], fail);
       sites.push({ name: link![1], url: link![2] });
       return;
     }
@@ -74,6 +93,8 @@ function parse(text: string): { sites: Site[]; articles: Article[] } {
       const entry = body.trim().match(ENTRY);
       if (!entry) fail('expected "[Title](address) (Language, YYYY-MM-DD)"');
       const [, title, url, languageRaw, date] = entry!;
+      checkText(title, fail);
+      checkUrl(url, fail);
       if (Number.isNaN(Date.parse(`${date}T00:00:00Z`))) fail(`"${date}" is not a real date`);
       const language = languageRaw.trim();
       const version: Version = {
