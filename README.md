@@ -6,7 +6,7 @@ A static site built with [Astro](https://astro.build). It sends no JavaScript to
 
 ## Build
 
-Needs Node 22.12 or newer.
+Needs Node 22.23.4 or newer.
 
 ```
 npm install
