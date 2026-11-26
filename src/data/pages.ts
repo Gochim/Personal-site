@@ -25,7 +25,7 @@ const home: Page = {
   label: 'Home',
   heading: p.name,
   title: p.name,
-  description: `${p.name} is a ${p.title} and ${p.secondTitle} based in ${p.country}, with ${p.years} years in the IT sector in both product and professional services companies.`,
+  description: `${p.name} is a ${p.title} and ${p.secondTitle} based in ${p.country}, with ${p.years} years in IT across product and services companies.`,
   justified: true,
   blocks: [
     { type: 'meta', text: identity },

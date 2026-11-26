@@ -72,7 +72,7 @@ export function schemaFor(page: Page, site: string, imageUrl: string) {
     name: page.title,
     description: page.description,
     inLanguage: 'en',
-    dateModified: p.updated,
+    dateModified: `${p.updated}T00:00:00Z`,
     isPartOf: { '@id': `${site}#website` },
     about: personRef,
   };
